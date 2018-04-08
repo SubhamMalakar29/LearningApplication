@@ -1,5 +1,6 @@
 package com.example.asus.project12;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -8,6 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Button;
+
+import java.io.FileOutputStream;
 import java.util.Random;
 
 public class zeroToTen extends AppCompatActivity {
@@ -16,7 +19,8 @@ public class zeroToTen extends AppCompatActivity {
     private TextView question;
 
     Random r;
-    private Integer mQuestions[], mAnswers[], mResponses[],counter=0;
+    private Integer mQuestions[], mAnswers[], mOptions[], counter = 0;
+    private String FILE = "Responses.csv";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,7 @@ public class zeroToTen extends AppCompatActivity {
         option1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                recorder(option1.getText().toString());
                 if (counter<5)
                     updateQuestion();
                 else
@@ -46,9 +51,10 @@ public class zeroToTen extends AppCompatActivity {
         option2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (counter<5)
+               recorder(option2.getText().toString());
+               if (counter<5)
                     updateQuestion();
-                else
+               else
                     testOver();
             }
         });
@@ -56,6 +62,7 @@ public class zeroToTen extends AppCompatActivity {
         option3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                recorder(option3.getText().toString());
                 if (counter<5)
                     updateQuestion();
                 else
@@ -66,6 +73,7 @@ public class zeroToTen extends AppCompatActivity {
         option4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                recorder(option4.getText().toString());
                 if (counter<5)
                     updateQuestion();
                 else
@@ -76,7 +84,7 @@ public class zeroToTen extends AppCompatActivity {
 
     public void prepareQuestions() {
         r = new Random();
-        int i,j,q,c=0;
+        int i,j,q,c;
         mQuestions = new Integer[5];
         for(i=0;i<5;i++) {
             mQuestions[i]=-1;
@@ -107,13 +115,82 @@ public class zeroToTen extends AppCompatActivity {
     public void updateQuestion(){
         if (counter<5) {
             question.setText(mQuestions[counter].toString());
-            counter++;
+            updateOptions();
+            //counter++;
         }
     }
+
+    public void updateOptions(){
+        mOptions = new Integer[4];
+        int opNoSeq[],q,i,j,c;
+        opNoSeq = new int[4];
+
+        for(i=0;i<4;i++) {
+            q=r.nextInt(4);
+            c=0;
+            for(j=0;j<i;j++) {
+                if(opNoSeq[j]==q)
+                    c++;
+            }
+            if(c==0){
+                opNoSeq[i]=q;
+            }
+            else
+                i--;
+        }
+
+        mOptions[0] = mAnswers[counter];
+
+        for(i=1;i<4;i++) {
+            q=r.nextInt(11);
+            c=0;
+            for(j=0;j<i;j++) {
+                if(mOptions[j]==q)
+                    c++;
+            }
+            if(c==0){
+                mOptions[i]=q;
+            }
+            else
+                i--;
+        }
+
+        for(i=0;i<4;i++) {
+            switch (opNoSeq[i]) {
+                case 0:
+                    option1.setText(mOptions[i].toString());
+                    break;
+                case 1:
+                    option2.setText(mOptions[i].toString());
+                    break;
+                case 2:
+                    option3.setText(mOptions[i].toString());
+                    break;
+                case 3:
+                    option4.setText(mOptions[i].toString());
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    public void recorder(String s) {
+        String entry = mQuestions[counter].toString()+" , "+mAnswers[counter].toString()+" , "+s+"\n";
+        try {
+            FileOutputStream out = openFileOutput(FILE, Context.MODE_APPEND);
+            out.write(entry.getBytes());
+            out.close();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        counter++;
+    }
+
     private void testOver () {
         AlertDialog.Builder alertMessage = new AlertDialog.Builder( zeroToTen.this );
         alertMessage
-                .setMessage("Test Over")
+                .setMessage("Test Over!")
                 .setCancelable(false)
                 .setPositiveButton("New Test",
                         new DialogInterface.OnClickListener() {
