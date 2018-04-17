@@ -1,8 +1,8 @@
 package com.example.asus.project12;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +10,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Button;
 
+import java.io.File;
 import java.io.FileOutputStream;
+import java.text.DateFormat;
+
+import java.util.Date;
 import java.util.Random;
 
 public class zeroToTen extends AppCompatActivity {
@@ -20,7 +24,7 @@ public class zeroToTen extends AppCompatActivity {
 
     Random r;
     private Integer mQuestions[], mAnswers[], mOptions[], counter = 0;
-    private String FILE = "Responses.csv";
+    public String path = Environment.getExternalStorageDirectory()+"/Learning Application";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +120,6 @@ public class zeroToTen extends AppCompatActivity {
         if (counter<5) {
             question.setText(mQuestions[counter].toString());
             updateOptions();
-            //counter++;
         }
     }
 
@@ -176,10 +179,16 @@ public class zeroToTen extends AppCompatActivity {
     }
 
     public void recorder(String s) {
-        String entry = mQuestions[counter].toString()+" , "+mAnswers[counter].toString()+" , "+s+"\n";
+        String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+        String entry = currentDateTimeString+" , "+mQuestions[counter].toString()+" , "+s+"\n";
+        File dir = new File(path);
+        if (!dir.exists())
+            dir.mkdirs();
+        File myFile = new File(path+"/ResponsesZeroToTen.csv");
         try {
-            FileOutputStream out = openFileOutput(FILE, Context.MODE_APPEND);
+            FileOutputStream out = new FileOutputStream(myFile,true);
             out.write(entry.getBytes());
+            out.flush();
             out.close();
         }catch (Exception e) {
             e.printStackTrace();
