@@ -2,14 +2,13 @@ package com.example.asus.project12;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,28 +22,28 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Random;
 
-public class zeroToTen extends AppCompatActivity {
+public class Test_Shapes extends AppCompatActivity {
 
-    private Button option1, option2, option3, option4;
+    private ImageView option1, option2, option3, option4;
     private TextView question;
 
     Random r;
-    private Integer mQuestions[], mAnswers[], mOptions[], counter = 0, myNum;
+    private Integer mQuestions[], mAnswers[], mOptions[], counter = 0;
+    public Integer temp,temp1,temp2,temp3,temp4;
     public String path = Environment.getExternalStorageDirectory()+"/Learning Application";
 
-    int[] sound = new int[]{R.raw.number_000, R.raw.number_001, R.raw.number_002, R.raw.number_003, R.raw.number_004, R.raw.number_005,
-                            R.raw.number_006, R.raw.number_007, R.raw.number_008, R.raw.number_009, R.raw.number_010};
+    int[] images = { R.drawable.circle_1, R.drawable.rectangle_3,
+            R.drawable.square_2, R.drawable.triangle_1,
+            R.drawable.oval_1, R.drawable.star_1};
 
-    String[] numbers = new String[]{ "ZERO", "ONE", "TWO", "THREE", "FOUR", "FIVE",
-                                     "SIX", "SEVEN", "EIGHT", "NINE", "TEN" };
-
+    String[] names = new String[] { "Circle", "Rectangle", "Square", "Triangle", "Oval", "Star" };
 
     DatabaseReference myRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_zero_to_ten);
+        setContentView(R.layout.activity_test_shapes);
 
         option1 = findViewById(R.id.op1);
         option2 = findViewById(R.id.op2);
@@ -56,19 +55,10 @@ public class zeroToTen extends AppCompatActivity {
         prepareAnswers();
         updateQuestion();
 
-        question.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                MediaPlayer mediaPlayer = MediaPlayer.create(zeroToTen.this,sound[myNum]);
-                mediaPlayer.start();
-            }
-        });
-
         option1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                recorder(option1.getText().toString());
+                recorder(temp1);
                 if (counter<5)
                     updateQuestion();
                 else
@@ -79,10 +69,10 @@ public class zeroToTen extends AppCompatActivity {
         option2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               recorder(option2.getText().toString());
-               if (counter<5)
+                recorder(temp2);
+                if (counter<5)
                     updateQuestion();
-               else
+                else
                     testOver();
             }
         });
@@ -90,7 +80,7 @@ public class zeroToTen extends AppCompatActivity {
         option3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                recorder(option3.getText().toString());
+                recorder(temp3);
                 if (counter<5)
                     updateQuestion();
                 else
@@ -101,7 +91,7 @@ public class zeroToTen extends AppCompatActivity {
         option4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                recorder(option4.getText().toString());
+                recorder(temp4);
                 if (counter<5)
                     updateQuestion();
                 else
@@ -112,21 +102,20 @@ public class zeroToTen extends AppCompatActivity {
 
     public void prepareQuestions() {
         r = new Random();
-        int i,j,q,c;
+        int i,j,c,q;
         mQuestions = new Integer[5];
         for(i=0;i<5;i++) {
             mQuestions[i]=-1;
         }
         for(i=0;i<5;i++) {
-            q=r.nextInt(11);
+            q=r.nextInt(6);
             c=0;
             for(j=0;j<i;j++) {
                 if(mQuestions[j]==q)
                     c++;
             }
-            if(c==0){
+            if(c==0)
                 mQuestions[i]=q;
-            }
             else
                 i--;
         }
@@ -142,10 +131,8 @@ public class zeroToTen extends AppCompatActivity {
 
     public void updateQuestion(){
         if (counter<5) {
-            question.setText(numbers[mQuestions[counter]]);
-            myNum = mQuestions[counter];
-            MediaPlayer mediaPlayer = MediaPlayer.create(zeroToTen.this,sound[myNum]);
-            mediaPlayer.start();
+            temp=mQuestions[counter];
+            question.setText(names[temp]);
             updateOptions();
         }
     }
@@ -172,7 +159,7 @@ public class zeroToTen extends AppCompatActivity {
         mOptions[0] = mAnswers[counter];
 
         for(i=1;i<4;i++) {
-            q=r.nextInt(11);
+            q=r.nextInt(6);
             c=0;
             for(j=0;j<i;j++) {
                 if(mOptions[j]==q)
@@ -188,16 +175,20 @@ public class zeroToTen extends AppCompatActivity {
         for(i=0;i<4;i++) {
             switch (opNoSeq[i]) {
                 case 0:
-                    option1.setText(mOptions[i].toString());
+                    temp1=mOptions[i];
+                    option1.setBackgroundResource(images[mOptions[i]]);
                     break;
                 case 1:
-                    option2.setText(mOptions[i].toString());
+                    temp2=mOptions[i];
+                    option2.setBackgroundResource(images[mOptions[i]]);
                     break;
                 case 2:
-                    option3.setText(mOptions[i].toString());
+                    temp3=mOptions[i];
+                    option3.setBackgroundResource(images[mOptions[i]]);
                     break;
                 case 3:
-                    option4.setText(mOptions[i].toString());
+                    temp4=mOptions[i];
+                    option4.setBackgroundResource(images[mOptions[i]]);
                     break;
                 default:
                     break;
@@ -205,21 +196,21 @@ public class zeroToTen extends AppCompatActivity {
         }
     }
 
-    public void recorder(String s) {
+    public void recorder(int s) {
         String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
-        String entry = currentDateTimeString+" , "+mQuestions[counter].toString()+" , "+s+"\n";
-        String Message = mQuestions[counter].toString()+" , "+s;
+        String entry = currentDateTimeString+" , "+names[temp]+" , "+names[s]+"\n";
+        String Message = names[temp].toString()+" , "+names[s];
 
         myRef = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userid = user.getUid();
 
-        myRef.child(userid).child("Log").child("Basic Numbers (0-10)").child(currentDateTimeString).setValue(Message);
+        myRef.child(userid).child("Log").child("Shapes").child(currentDateTimeString).setValue(Message);
 
         File dir = new File(path);
         if (!dir.exists())
             dir.mkdirs();
-        File myFile = new File(path+"/Digits_Responses.csv");
+        File myFile = new File(path+"/Shapes.csv");
         try {
             FileOutputStream out = new FileOutputStream(myFile,true);
             out.write(entry.getBytes());
@@ -232,7 +223,7 @@ public class zeroToTen extends AppCompatActivity {
     }
 
     private void testOver () {
-        AlertDialog.Builder alertMessage = new AlertDialog.Builder( zeroToTen.this );
+        AlertDialog.Builder alertMessage = new AlertDialog.Builder( Test_Shapes.this );
         alertMessage
                 .setMessage("Test Over!")
                 .setCancelable(false)
@@ -240,7 +231,7 @@ public class zeroToTen extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                startActivity(new Intent(getApplicationContext(),zeroToTen.class));
+                                startActivity(new Intent(getApplicationContext(), Test_Shapes.class));
                                 finish();
                             }
                         })

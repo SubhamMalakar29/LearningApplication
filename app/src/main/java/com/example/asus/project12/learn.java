@@ -10,6 +10,7 @@ public class learn extends AppCompatActivity {
 
     private ImageButton learnAlphabets_button;
     private ImageButton learnNumbers_button;
+    private ImageButton learnShapes_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +19,7 @@ public class learn extends AppCompatActivity {
 
         learnAlphabets_button = findViewById(R.id.Alphabets);
         learnNumbers_button = findViewById(R.id.Numbers);
+        learnShapes_button = findViewById(R.id.Shapes);
 
         learnAlphabets_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,6 +34,13 @@ public class learn extends AppCompatActivity {
                 openLearnNumbersActivity();
             }
         });
+
+        learnShapes_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openLearnShapesActivity();
+            }
+        });
     }
 
     public void openLearnAlphabetsActivity() {
@@ -42,5 +51,10 @@ public class learn extends AppCompatActivity {
     public void openLearnNumbersActivity() {
         Intent learningNumbers = new Intent(this, learnNumbers.class);
         startActivity(learningNumbers);
+    }
+
+    public void openLearnShapesActivity() {
+        Intent learningShapes = new Intent(this, Learn_Shapes.class);
+        startActivity(learningShapes);
     }
 }

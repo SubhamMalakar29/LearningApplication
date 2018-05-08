@@ -28,7 +28,12 @@
         <activity android:name=".learnNumbers" />
         <activity android:name=".testNumbers" />
         <activity android:name=".testAlphabets" />
-        <activity android:name=".zeroToTen"></activity>
+        <activity android:name=".zeroToTen" />
+        <activity android:name=".Login_Activity" />
+        <activity android:name=".Signup_Activity" />
+        <activity android:name=".Profile_Activity" />
+        <activity android:name=".Test_Shapes" />
+        <activity android:name=".Learn_Shapes"></activity>
     </application>
 
 </manifest>

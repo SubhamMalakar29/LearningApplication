@@ -22,7 +22,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.281"
+        app:layout_constraintVertical_bias="0.127"
         app:srcCompat="@drawable/numbers" />
 
     <ImageButton
@@ -40,7 +40,25 @@
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.685"
+        app:layout_constraintVertical_bias="0.462"
         app:srcCompat="@drawable/alphabets" />
+
+    <ImageButton
+        android:id="@+id/Shapes"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="187dp"
+        android:layout_height="123dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.807"
+        app:srcCompat="@drawable/shapes" />
 
 </android.support.constraint.ConstraintLayout>

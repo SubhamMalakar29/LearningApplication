@@ -10,6 +10,7 @@ public class test extends AppCompatActivity {
 
     private ImageButton testAlphabets_button;
     private ImageButton testNumbers_button;
+    private ImageButton testShapes_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +19,7 @@ public class test extends AppCompatActivity {
 
         testAlphabets_button = findViewById(R.id.Alphabets);
         testNumbers_button = findViewById(R.id.Numbers);
+        testShapes_button = findViewById(R.id.Shapes);
 
         testAlphabets_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,6 +34,13 @@ public class test extends AppCompatActivity {
                 openTestNumbersActivity();
             }
         });
+
+        testShapes_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openTestShapesActivity();
+            }
+        });
     }
 
     public void openTestAlphabetsActivity() {
@@ -42,5 +51,10 @@ public class test extends AppCompatActivity {
     public void openTestNumbersActivity() {
         Intent testingNumbers = new Intent(this, testNumbers.class);
         startActivity(testingNumbers);
+    }
+
+    public void openTestShapesActivity() {
+        Intent testingShapes = new Intent(this, Test_Shapes.class);
+        startActivity(testingShapes);
     }
 }
