@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class welcome extends AppCompatActivity {
-    private static int Splash = 2000;
+    private static int Splash = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
